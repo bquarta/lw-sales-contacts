@@ -11,6 +11,7 @@ export default {
 
   data() {
     return {
+      continents: [],
       companies: [],
       contacts: [],
       dropdown: { height: 0 },
@@ -40,9 +41,9 @@ export default {
             return name === cnt
           })
 
-          if (filteredCountries.length) 
-          return true
-          
+          if (filteredCountries.length)
+            return true
+
           return false
         })
       })
@@ -76,6 +77,11 @@ export default {
 
   methods: {
     setFilter(filter, option) {
+
+      if (filter === 'continents') {
+        this.updateCountryFilters()
+      }
+
       setTimeout(() => {
         this.clearFilter(filter, option, this.filters[filter][option])
       }, 100)
@@ -89,6 +95,7 @@ export default {
 
     clearAllFilters() {
       Object.keys(this.filters).forEach(this.clearFilter)
+      this.updateCountryFilters()
     },
 
     setMenu(menu, active) {
@@ -96,12 +103,50 @@ export default {
         this.menus[tab] = !active && tab === menu
       })
     },
+
+    updateCountryFilters() {
+      setTimeout(() => {
+        const activeContinents = this.allContinents.filter(c => this.activeFilters.continents.includes(c.name));
+
+        this.filters.countries = {};
+
+        if (activeContinents.length) {
+          console.log('active Continents!')
+
+          activeContinents.forEach(continent => {
+            let filteredCountries = continent.countries;
+
+            continent.countries.forEach(country => {
+              this.filters.countries[country.name] = false
+            });
+          })
+        }
+        else {
+          this.allContinents.forEach(continent => {
+            continent.countries.forEach(country => {
+              this.filters.countries[country.name] = false
+            })
+          })
+        }
+
+
+        activeContinents.forEach(continent => {
+          let filteredCountries = continent.countries;
+
+          continent.countries.forEach(country => {
+            this.filters.countries[country.name] = false
+          });
+        })
+      }, 200)
+    }
   },
 
   mounted() {
     setTimeout(() => {
+      this.continents = this.allContinents
+
       this.allContinents.forEach((continent) => {
-        this.filters.continents[continent.name] = continent
+        this.filters.continents[continent.name] = false
       })
     }, 500)
 
@@ -110,7 +155,7 @@ export default {
 
       this.allContacts.forEach(({ countries }) => {
         countries.forEach(country => {
-          this.filters.countries[country.name] = country
+          this.filters.countries[country.name] = false
         })
       })
     }, 500)
