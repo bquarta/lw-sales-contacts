@@ -84,6 +84,8 @@ export default {
 
       setTimeout(() => {
         this.clearFilter(filter, option, this.filters[filter][option]);
+
+        this.menus[filter] = !this.menus[filter]
       }, 100);
     },
 
