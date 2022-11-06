@@ -69,13 +69,18 @@ export default {
     },
 
     activeMenu() {
-      const activeMenu = Object.keys(this.menus).reduce(($$, set, i) => (this.menus[set] ? i : $$), -1);
-      return activeMenu
+      const activeMenu = Object.keys(this.menus).reduce(
+        ($$, set, i) => (this.menus[set] ? i : $$),
+        -1
+      );
+      return activeMenu;
     },
 
     contactsList() {
       let { countries: countryFilters } = this.activeFilters;
-      let activeContinents = this.allContinents.filter((c) => this.activeFilters.continents.includes(c.name));
+      let activeContinents = this.allContinents.filter((c) =>
+        this.activeFilters.continents.includes(c.name)
+      );
       let unsortedList = [];
 
       activeContinents.forEach((continent) => {
@@ -87,25 +92,24 @@ export default {
       );
 
       return this.allContacts.filter(({ countries }) => {
-
         if (!countryFilters.length) {
           if (!sortedList.length) {
-            return true
+            return true;
           } else {
             const found = countries.filter((c) => {
               const x = sortedList.filter((continentCountry) => {
-                return c.name === continentCountry.name
-              })
-              return (x.length) ? true : false
-            })
+                return c.name === continentCountry.name;
+              });
+              return x.length ? true : false;
+            });
 
-            return (found.length) ? true : false
+            return found.length ? true : false;
           }
         } else {
-          return (countryFilters.every((country) => {
+          return countryFilters.every((country) => {
             let filteredCountries = countries.filter((c) => c.name === country);
-            return (filteredCountries.length) ? true : false;
-          }));
+            return filteredCountries.length ? true : false;
+          });
         }
       });
     },
@@ -123,7 +127,7 @@ export default {
         this.clearFilter(filter, option, this.filters[filter][option]);
 
         // Close active Filter-Tab after filter has been selected
-        this.menus[filter] = !this.menus[filter]
+        this.menus[filter] = !this.menus[filter];
       }, 100);
     },
 
@@ -155,7 +159,9 @@ export default {
         a.name > b.name ? 1 : -1
       );
 
-      sortedList.forEach((country) => { this.filters.countries[country.name] = false });
+      sortedList.forEach((country) => {
+        this.filters.countries[country.name] = false;
+      });
     },
 
     updateCountryFilters() {
@@ -180,7 +186,9 @@ export default {
         if (!this.$refs.menu || !this.$refs.menu[index]) {
           this.dropdown.height = 0;
         } else {
-          this.dropdown.height = `${this.$refs.menu[index].clientHeight + 26}px`;
+          this.dropdown.height = `${
+            this.$refs.menu[index].clientHeight + 26
+          }px`;
         }
       });
     },
@@ -204,10 +212,15 @@ export default {
       <img :src="'wp-content/plugins/lawo-api-client/images/filter.svg'" />
     </figure>
 
-    <div v-for="(active, menu) in menus" class="nav__label" :class="{
-      'nav__label--active': active,
-      'nav__label--filter': activeFilters[menu].length,
-    }" @click="setMenu(menu, active)">
+    <div
+      v-for="(active, menu) in menus"
+      class="nav__label"
+      :class="{
+        'nav__label--active': active,
+        'nav__label--filter': activeFilters[menu].length,
+      }"
+      @click="setMenu(menu, active)"
+    >
       <span v-if="activeFilters[menu].length">
         <template v-for="(key, filter) in filters[menu]">
           <template v-if="key">{{ filter }}</template>
@@ -221,10 +234,26 @@ export default {
     </div>
   </nav>
 
-  <transition-group name="dropdown" tag="section" class="dropdown" :style="dropdown">
-    <ul v-for="(options, filter) in filters" class="filters" v-show="menus[filter]" ref="menu" :key="filter">
-      <li v-for="(active, option) in options" class="filters__item" :class="{ 'filters__item--active': active }"
-        :key="option" @click="setFilter(filter, option)">
+  <transition-group
+    name="dropdown"
+    tag="section"
+    class="dropdown"
+    :style="dropdown"
+  >
+    <ul
+      v-for="(options, filter) in filters"
+      class="filters"
+      v-show="menus[filter]"
+      ref="menu"
+      :key="filter"
+    >
+      <li
+        v-for="(active, option) in options"
+        class="filters__item"
+        :class="{ 'filters__item--active': active }"
+        :key="option"
+        @click="setFilter(filter, option)"
+      >
         {{ option }}
       </li>
     </ul>

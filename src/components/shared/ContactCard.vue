@@ -118,18 +118,16 @@ export default {
         <figure class="sc_qrcode">
           <qr-code :value="contact.vCard" :size="qrSize" level="Q" />
         </figure>
-
-        <button class="sc-button et_pb_button_wrapper">
-          <a
-            class="et_pb_button et_pb_promo_button"
-            :download="vCardName"
-            :href="vCardLink"
-            >Visitenkarte speichern</a
-          >
-        </button>
       </div>
     </div>
 
+    <div class="sc-button-container">
+      <button class="sc-button">
+        <a class="" :download="vCardName" :href="vCardLink"
+          >Visitenkarte speichern</a
+        >
+      </button>
+    </div>
     <div class="sc_card-oblique"></div>
   </div>
 </template>

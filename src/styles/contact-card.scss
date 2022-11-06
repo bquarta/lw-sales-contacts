@@ -93,8 +93,38 @@
   }
 }
 
+.sc-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: $lawo-color-normal;
+}
+
 .sc-button {
   display: none;
+  text-decoration: none;
+  outline: none;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  padding: 0.3em 0.8em;
+  margin: 1em;
+  background-color: $lawo-color-normal;
+  font-size: 1.2em;
+  color: #fff;
+  cursor: pointer;
+  transition-duration: 0.2s;
+  transition-property: all;
+
+  &:hover {
+    background-color: $lawo-color-light;
+    border: 2px solid $lawo-color-light;
+    color: #fff;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .sc_card-oblique {
@@ -143,6 +173,8 @@ option:checked {
 /*** Responsive Styles Tablet And Below ***/
 @media all and (max-width: 980px) {
   .sc_qrcode {
+    width: 190px;
+    height: 190px;
     canvas {
       max-width: 190px;
       max-height: 190px;
@@ -185,6 +217,9 @@ option:checked {
 @media all and (max-width: 479px) {
   .sc_card {
     max-width: 88vw;
+  }
+
+  .sc-wrapper {
     padding: 1em 0.5em;
   }
 
@@ -202,5 +237,8 @@ option:checked {
 
   .sc-button {
     display: block;
+  }
+  .sc_card-oblique {
+    display: none;
   }
 }

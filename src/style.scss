@@ -40,12 +40,6 @@ main {
   }
 
   &__label {
-    // position: relative;
-    // margin-left: 1rem;
-    // text-transform: capitalize;
-    // z-index: 1;
-    // cursor: pointer;
-
     display: flex;
     align-items: center;
     padding: 0.3em 1em;
@@ -58,20 +52,12 @@ main {
     border-right: 1px solid $lawo-color-dark;
     text-transform: capitalize;
 
-    &::after {
-      content: "\00d7";
-      display: inline-block;
-      color: transparent;
-      width: 0.5rem;
-      font-weight: 400;
-      transform: scale(0);
-      transition: transform 150ms ease-in-out;
+    &:last-child {
+      justify-content: flex-end;
     }
 
     &--clear {
-      color: #f68185;
       opacity: 0;
-      transform: translate3d(-25%, 0, 0);
       pointer-events: none;
       transition: all 275ms ease-in-out;
     }
@@ -87,11 +73,6 @@ main {
       transform: scale(1);
     }
 
-    &--filter::after {
-      content: "\2022";
-      color: #46d2c4;
-    }
-
     &--active {
       background-color: $lawo-color-light;
 
@@ -103,6 +84,7 @@ main {
         width: 20px;
         height: 20px;
         background-color: $lawo-color-light;
+        transition: none;
         transform: rotate(45deg);
       }
     }
