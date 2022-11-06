@@ -116,7 +116,9 @@ export default {
         </div>
 
         <figure class="sc_qrcode">
-          <qr-code :value="contact.vCard" :size="qrSize" level="Q" />
+          <a :download="vCardName" :href="vCardLink" title="Download VCard">
+            <qr-code :value="contact.vCard" :size="qrSize" level="Q" />
+          </a>
         </figure>
       </div>
     </div>
@@ -124,7 +126,7 @@ export default {
     <div class="sc-button-container">
       <button class="sc-button">
         <a class="" :download="vCardName" :href="vCardLink"
-          >Visitenkarte speichern</a
+          >Download VCard</a
         >
       </button>
     </div>
