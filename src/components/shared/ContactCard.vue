@@ -42,12 +42,12 @@ export default {
         </figure>
 
         <div class="sc_userinfo">
-          <div v-if="contact.countries.length > 1" class="sc_country">
+          <!-- <div v-if="contact.countries.length > 1" class="sc_country">
             {{ contact.countries.length }} Countries
           </div>
           <div v-else-if="contact.countries.length == 1" class="sc_country">
             {{ contact.countries[0].name }}
-          </div>
+          </div> -->
 
           <div class="sc_name">
             {{ contact.firstName }} {{ contact.lastName }}
@@ -70,17 +70,48 @@ export default {
       <div class="sc_section">
         <div v-if="detailsAreVisible" class="sc_details">
           <div class="sc_detail-item">
-            <span v-if="contact.phone.length > 0">Phone:</span>
-            {{ contact.phone }}
+            <figure v-if="contact.phone.length > 0">
+              <img
+                class="sc_detail-item-icon"
+                :src="'wp-content/plugins/lawo-api-client/images/phone-call.svg'"
+              />
+            </figure>
+            <a v-if="contact.phone.length > 0" :href="'tel:' + contact.phone">{{
+              contact.phone
+            }}</a>
           </div>
           <div class="sc_detail-item">
-            <span>Mobile:</span> {{ contact.mobile }}
+            <figure v-if="contact.mobile.length > 0">
+              <img
+                class="sc_detail-item-icon"
+                :src="'wp-content/plugins/lawo-api-client/images/phone-call.svg'"
+              />
+            </figure>
+            <a
+              v-if="contact.mobile.length > 0"
+              :href="'tel:' + contact.mobile"
+              >{{ contact.mobile }}</a
+            >
           </div>
           <div class="sc_detail-item">
-            <span>Email:</span> {{ contact.email }}
+            <figure v-if="contact.email.length > 0">
+              <img
+                class="sc_detail-item-icon"
+                :src="'wp-content/plugins/lawo-api-client/images/email.svg'"
+              />
+            </figure>
+            {{ contact.email }}
           </div>
           <div class="sc_detail-item">
-            <span>Web:</span> {{ contact.website }}
+            <figure v-if="contact.website.length > 0">
+              <img
+                class="sc_detail-item-icon"
+                :src="'wp-content/plugins/lawo-api-client/images/web.svg'"
+              />
+            </figure>
+            <a v-if="contact.website.length > 0" :href="contact.website">{{
+              contact.website
+            }}</a>
           </div>
         </div>
 
