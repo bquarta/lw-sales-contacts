@@ -14,7 +14,6 @@ const mapActions = () => {
 }
 
 mapActions().getContinents();
-mapActions().getCountries();
 mapActions().getContacts();
 
 

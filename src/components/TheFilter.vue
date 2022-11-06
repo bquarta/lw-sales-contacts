@@ -1,53 +1,18 @@
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Icon from "./shared/Icon.vue";
+import { mapGetters } from "vuex";
 import ContactList from "./ContactList.vue";
 
 export default {
-  components: {
-    Icon,
-    ContactList,
-  },
+  components: { ContactList },
 
   data() {
     return {
-      continents: [],
-      companies: [],
-      contacts: [],
-      dropdown: { height: 0 },
       filters: { continents: {}, countries: {} },
       menus: { continents: false, countries: false },
     };
   },
 
   computed: {
-    activeMenu() {
-      return Object.keys(this.menus).reduce(
-        ($$, set, i) => (this.menus[set] ? i : $$),
-        -1
-      );
-    },
-
-    contactsList() {
-      let { countries: countr } = this.activeFilters;
-
-      return this.contacts.filter(({ countries, countries: kauntri }) => {
-        return (
-          !countr.length ||
-          countr.every((cnt) => {
-            let filteredCountries = countries.filter((c) => {
-              const name = c.name;
-              return name === cnt;
-            });
-
-            if (filteredCountries.length) return true;
-
-            return false;
-          })
-        );
-      });
-    },
-
     activeFilters() {
       let { continents, countries } = this.filters;
 
@@ -57,23 +22,49 @@ export default {
       };
     },
 
-    ...mapGetters(["allContinents", "allContacts"]),
-  },
+    activeMenu() {
+      const activeMenu = Object.keys(this.menus).reduce(($$, set, i) => (this.menus[set] ? i : $$), -1);
+      return activeMenu
+    },
 
-  watch: {
-    activeMenu(index, from) {
-      if (index === from) return;
+    contactsList() {
+      let { countries: countryFilters } = this.activeFilters;
+      let activeContinents = this.allContinents.filter((c) => this.activeFilters.continents.includes(c.name));
+      let unsortedList = [];
 
-      this.$nextTick(() => {
-        if (!this.$refs.menu || !this.$refs.menu[index]) {
-          this.dropdown.height = 0;
+      activeContinents.forEach((continent) => {
+        unsortedList = [...unsortedList, ...continent.countries];
+      });
+
+      const sortedList = unsortedList.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
+
+      return this.allContacts.filter(({ countries }) => {
+
+        if (!countryFilters.length) {
+          if (!sortedList.length) {
+            return true
+          } else {
+            const found = countries.filter((c) => {
+              const x = sortedList.filter((continentCountry) => {
+                return c.name === continentCountry.name
+              })
+              return (x.length) ? true : false
+            })
+
+            return (found.length) ? true : false
+          }
         } else {
-          this.dropdown.height = `${
-            this.$refs.menu[index].clientHeight + 26
-          }px`;
+          return (countryFilters.every((country) => {
+            let filteredCountries = countries.filter((c) => c.name === country);
+            return (filteredCountries.length) ? true : false;
+          }));
         }
       });
     },
+
+    ...mapGetters(["allContinents", "allContacts"]),
   },
 
   methods: {
@@ -85,6 +76,7 @@ export default {
       setTimeout(() => {
         this.clearFilter(filter, option, this.filters[filter][option]);
 
+        // Close active Filter-Tab after filter has been selected
         this.menus[filter] = !this.menus[filter]
       }, 100);
     },
@@ -117,9 +109,7 @@ export default {
         a.name > b.name ? 1 : -1
       );
 
-      sortedList.forEach((country) => {
-        this.filters.countries[country.name] = false;
-      });
+      sortedList.forEach((country) => { this.filters.countries[country.name] = false });
     },
 
     updateCountryFilters() {
@@ -138,9 +128,6 @@ export default {
 
   mounted() {
     setTimeout(() => {
-      this.continents = this.allContinents;
-      this.contacts = this.allContacts;
-
       this.allContinents.forEach((continent) => {
         this.filters.continents[continent.name] = false;
       });
@@ -158,43 +145,20 @@ export default {
         Clear all
       </button>
 
-      <button
-        v-for="(active, menu) in menus"
-        class="btn nav__label"
-        :class="{
-          'nav__label--active': active,
-          'nav__label--filter': activeFilters[menu].length,
-        }"
-        @click="setMenu(menu, active)"
-      >
+      <button v-for="(active, menu) in menus" class="btn nav__label" :class="{
+        'nav__label--active': active,
+        'nav__label--filter': activeFilters[menu].length,
+      }" @click="setMenu(menu, active)">
         {{ menu }}
       </button>
     </nav>
 
-    <transition-group
-      name="dropdown"
-      tag="section"
-      class="dropdown"
-      :style="dropdown"
-    >
-      <ul
-        v-for="(options, filter) in filters"
-        class="filters"
-        v-show="menus[filter]"
-        ref="menu"
-        :key="filter"
-      >
-        <li
-          v-for="(active, option) in options"
-          class="filters__item"
-          :class="{ 'filters__item--active': active }"
-          :key="option"
-          @click="setFilter(filter, option)"
-        >
-          {{ option }}
-        </li>
-      </ul>
-    </transition-group>
+    <ul v-for="(options, filter) in filters" class="filters" v-show="menus[filter]" ref="menu" :key="filter">
+      <li v-for="(active, option) in options" class="filters__item" :class="{ 'filters__item--active': active }"
+        :key="option" @click="setFilter(filter, option)">
+        {{ option }}
+      </li>
+    </ul>
   </div>
   <contact-list :contacts="contactsList" />
 </template>

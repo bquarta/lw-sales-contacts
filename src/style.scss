@@ -1,6 +1,10 @@
 @import "./styles/normalize.scss";
 @import "./styles/contact-card.scss";
 
+body {
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
 main {
   margin: 0 10px;
 }
