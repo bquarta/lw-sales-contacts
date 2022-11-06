@@ -208,7 +208,12 @@ export default {
       'nav__label--active': active,
       'nav__label--filter': activeFilters[menu].length,
     }" @click="setMenu(menu, active)">
-      {{ menu }}
+      <span v-if="activeFilters[menu].length">
+        <template v-for="(key, filter) in filters[menu]">
+          <template v-if="key">{{ filter }}</template>
+        </template>
+      </span>
+      <span v-else>Filter {{ menu }}</span>
     </div>
 
     <div class="nav__label nav__label--clear" @click="clearAllFilters">
