@@ -7,6 +7,7 @@ export default {
 
   data() {
     return {
+      dropdown: { height: 0 },
       filters: { continents: {}, countries: {} },
       menus: { continents: false, countries: false },
     };
@@ -171,6 +172,20 @@ export default {
     },
   },
 
+  watch: {
+    activeMenu(index, from) {
+      if (index === from) return;
+
+      this.$nextTick(() => {
+        if (!this.$refs.menu || !this.$refs.menu[index]) {
+          this.dropdown.height = 0;
+        } else {
+          this.dropdown.height = `${this.$refs.menu[index].clientHeight + 26}px`;
+        }
+      });
+    },
+  },
+
   mounted() {
     setTimeout(() => {
       this.allContinents.forEach((continent) => {
@@ -189,15 +204,10 @@ export default {
       <img :src="'wp-content/plugins/lawo-api-client/images/filter.svg'" />
     </figure>
 
-    <div
-      v-for="(active, menu) in menus"
-      class="nav__label"
-      :class="{
-        'nav__label--active': active,
-        'nav__label--filter': activeFilters[menu].length,
-      }"
-      @click="setMenu(menu, active)"
-    >
+    <div v-for="(active, menu) in menus" class="nav__label" :class="{
+      'nav__label--active': active,
+      'nav__label--filter': activeFilters[menu].length,
+    }" @click="setMenu(menu, active)">
       {{ menu }}
     </div>
 
@@ -206,31 +216,15 @@ export default {
     </div>
   </nav>
 
-    <transition-group
-      name="dropdown"
-      tag="section"
-      class="dropdown"
-      :style="dropdown"
-    >
-      <ul
-        v-for="(options, filter) in filters"
-        class="filters"
-        v-show="menus[filter]"
-        ref="menu"
-        :key="filter"
-      >
-        <li
-          v-for="(active, option) in options"
-          class="filters__item"
-          :class="{ 'filters__item--active': active }"
-          :key="option"
-          @click="setFilter(filter, option)"
-        >
-          {{ option }}
-        </li>
-      </ul>
-    </transition-group>
-  </div>
+  <transition-group name="dropdown" tag="section" class="dropdown" :style="dropdown">
+    <ul v-for="(options, filter) in filters" class="filters" v-show="menus[filter]" ref="menu" :key="filter">
+      <li v-for="(active, option) in options" class="filters__item" :class="{ 'filters__item--active': active }"
+        :key="option" @click="setFilter(filter, option)">
+        {{ option }}
+      </li>
+    </ul>
+  </transition-group>
+
   <contact-list :contacts="contactsList" />
 </template>
 
