@@ -1,19 +1,13 @@
-// $tablet: 980px;
-// $phone-landscape: 767px;
-// $phone-portrait: 479px;
-
 .sc_list {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  //   margin: -10px 0 0 -10px;
   padding: 0;
 }
 
 .sc_card {
   width: calc(100% * (1 / 2) - 10px - 1px);
-  //   max-width: 600px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -52,7 +46,7 @@
 
 .sc_country {
   font-size: 1.2em;
-  color: #00a7e7;
+  color: $lawo-color-normal;
 }
 
 .sc_name {
@@ -64,21 +58,38 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin: 1em;
-}
+  margin: 1em 0 1em 1em;
 
-.sc_detail-item {
-  margin: 0.5em 1em;
-  span {
-    font-weight: bold;
+  .sc_detail-item {
+    display: flex;
+    align-items: center;
+    margin: 0.2em 0.8em;
+    white-space: nowrap;
+
+    figure {
+      margin: 0 0.6em 0 0;
+      .sc_detail-item-icon {
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+    a {
+      color: $lawo-color-normal;
+      text-decoration: none;
+      &:hover {
+        color: rgba($lawo-color-normal, 0.6);
+      }
+    }
   }
 }
-
 .sc_qrcode {
+  padding: 0.6em;
   margin: 1em;
-  img {
-    width: 100%;
-    max-width: 150px;
+  background-color: #fff;
+  canvas {
+    max-width: 120px;
+    max-height: 120px;
+    vertical-align: middle;
   }
 }
 
@@ -96,7 +107,7 @@
   background-image: -webkit-linear-gradient(
     -27deg,
     #ffffff 74.6%,
-    #00a7e7 26.4%
+    $lawo-color-normal 26.4%
   );
   background-color: #fff;
 }
@@ -113,21 +124,42 @@
 }
 
 option:checked {
-  background-color: #00a7e7;
+  background-color: $lawo-color-normal;
   color: #fff;
 }
 
 /*** Responsive Styles Tablet And Below ***/
+@media all and (max-width: 1200px) {
+  .sc_qrcode {
+    width: 130px;
+    height: 130px;
+    canvas {
+      max-width: 130px;
+      max-height: 130px;
+    }
+  }
+}
+
+/*** Responsive Styles Tablet And Below ***/
 @media all and (max-width: 980px) {
+  .sc_qrcode {
+    canvas {
+      max-width: 190px;
+      max-height: 190px;
+    }
+  }
+
   .sc_card {
-    width: calc(100% * (1 / 1) - 10px - 1px);
+    width: calc(100% * (1 / 1) - 10px - 20%);
   }
 }
 
 /*** Responsive Styles Smartphone Only ***/
 @media all and (max-width: 767px) {
   .sc_card {
-    max-width: 60vw;
+    .sc_card {
+      width: calc(100% * (1 / 1) - 10px - 20%);
+    }
   }
 
   .sc_container {
