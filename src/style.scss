@@ -4,14 +4,12 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  -webkit-user-select: none;
-  /* Safari */
-  -ms-user-select: none;
-  /* IE 10 and IE 11 */
-  user-select: none;
-  /* Standard syntax */
 }
 
+::selection {
+  background: $lawo-color-normal;
+  color: #fff;
+}
 
 #app__sales-contacts {
   * {
@@ -30,7 +28,7 @@ body {
       padding: 1em 1.2em 1em 1.2em;
       margin: 0;
       border-right: 1px solid $lawo-color-dark;
-  
+
       img {
         display: flex;
         align-items: center;
@@ -84,7 +82,7 @@ body {
       transition: all 275ms ease-in-out;
     }
 
-    &--filter~&--clear {
+    &--filter ~ &--clear {
       opacity: 1;
       transform: translate3d(0, 0, 0);
       pointer-events: auto;
@@ -202,7 +200,8 @@ body {
 }
 
 /*** Responsive Styles Tablet And Below ***/
-@media all and (max-width: 980px) {}
+@media all and (max-width: 980px) {
+}
 
 /*** Responsive Styles Smartphone Only ***/
 @media all and (max-width: 767px) {
