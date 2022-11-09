@@ -62,7 +62,9 @@ export default {
             {{ contact.salesCompanies.length }} Companies
           </div>
           <div v-else-if="contact.salesCompanies.length == 1">
-            {{ contact.salesCompanies[0].name }}
+            <template v-if="contact.salesCompanies[0].isExternal">
+              {{ contact.salesCompanies[0].name }}
+            </template>
           </div>
         </div>
       </div>

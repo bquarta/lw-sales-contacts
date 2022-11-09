@@ -14,6 +14,11 @@ export default {
   },
 
   computed: {
+    isFilters() {
+      return this.activeFilters.continents.length 
+          || this.activeFilters.countries.length
+    },
+
     activeMenu() {
       return Object.keys(this.menus).reduce(
         ($$, set, i) => (this.menus[set] ? i : $$),
@@ -259,7 +264,11 @@ export default {
     </ul>
   </transition-group>
 
-  <contact-list :contacts="contactsList" />
+  <contact-list v-if="isFilters" :contacts="contactsList" />
+  <div v-else>
+    <p>Please select a continent and/or country from the filter above.</p>
+  </div>
+  
 </template>
 
 <style lang="sass" />
