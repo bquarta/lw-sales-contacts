@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapActions } from "vuex";
+import CompanyCard from "./shared/CompanyCard.vue";
 import ContactCard from "./shared/ContactCard.vue";
 
 export default {
@@ -8,6 +8,10 @@ export default {
       type: Object,
       required: true,
     },
+    companies: {
+      type: Object,
+      required: false
+    }
   },
   data() {
     return {
@@ -15,10 +19,8 @@ export default {
       selectedCountry: "",
     };
   },
-  computed: {
-    ...mapGetters(["allContacts"]),
-  },
   components: {
+    CompanyCard,
     ContactCard,
   },
 };
@@ -30,6 +32,11 @@ export default {
       v-for="contact in contacts"
       :key="contact.guid"
       :contact="contact"
+    />
+    <company-card
+      v-for="company in companies"
+      :key="company.guid"
+      :contact="company"
     />
   </transition-group>
 </template>

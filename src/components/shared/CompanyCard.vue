@@ -21,7 +21,7 @@ export default {
   computed: {
     vCardName() {
       return (
-        "Lawo_" + this.contact.firstName + "_" + this.contact.lastName + ".vcf"
+        "Lawo_" + this.contact.name + ".vcf"
       );
     },
     vCardLink() {
@@ -74,9 +74,10 @@ export default {
           </div> -->
 
           <div class="sc_name">
-            {{ contact.firstName }} {{ contact.lastName }}
+            {{ contact.name }}
           </div>
-
+          
+          <!--
           <div v-if="contact.countries.length > 1 && contact.salesCompanies.length > 1">
             {{ contact.salesCompanies.length }} Companies
           </div>
@@ -84,7 +85,8 @@ export default {
             <template v-if="contact.salesCompanies[0].isExternal">
               {{ contact.salesCompanies[0].name }}
             </template>
-          </div>
+          </div>    
+          -->
         </div>
       </div>
 
@@ -135,6 +137,6 @@ export default {
         <a class="" :download="vCardName" :href="vCardLink">Download VCard</a>
       </button>
     </div>
-    <div class="sc_card-oblique"></div>
+    <div class="sc_card-oblique company"></div>
   </div>
 </template>

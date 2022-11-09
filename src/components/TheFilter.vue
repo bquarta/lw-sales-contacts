@@ -28,44 +28,6 @@ export default {
       );
     },
 
-    contactsList() {
-      let { countries: countryFilters } = this.activeFilters;
-      let activeContinents = this.allContinents.filter((c) =>
-        this.activeFilters.continents.includes(c.name)
-      );
-      let unsortedList = [];
-
-      activeContinents.forEach((continent) => {
-        unsortedList = [...unsortedList, ...continent.countries];
-      });
-
-      const sortedList = unsortedList.sort((a, b) =>
-        a.name > b.name ? 1 : -1
-      );
-
-      return this.allContacts.filter(({ countries }) => {
-        if (!countryFilters.length) {
-          if (!sortedList.length) {
-            return true;
-          } else {
-            const found = countries.filter((c) => {
-              const x = sortedList.filter((continentCountry) => {
-                return c.name === continentCountry.name;
-              });
-              return x.length ? true : false;
-            });
-
-            return found.length ? true : false;
-          }
-        } else {
-          return countryFilters.every((country) => {
-            let filteredCountries = countries.filter((c) => c.name === country);
-            return filteredCountries.length ? true : false;
-          });
-        }
-      });
-    },
-
     activeFilters() {
       let { continents, countries } = this.filters;
 
@@ -83,6 +45,44 @@ export default {
       return activeMenu;
     },
 
+    companiesList() {
+      let { countries: countryFilters } = this.activeFilters;
+      let activeContinents = this.allContinents.filter((c) =>
+        this.activeFilters.continents.includes(c.name)
+      );
+      let unsortedList = [];
+
+      activeContinents.forEach((continent) => {
+        unsortedList = [...unsortedList, ...continent.countries];
+      });
+
+      const sortedList = unsortedList.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
+
+      return this.allCompanies.filter(({ countries }) => {
+        if (!countryFilters.length) {
+          if (!sortedList.length) {
+            return true;
+          } else {
+            const found = countries.filter((c) => {
+              const x = sortedList.filter((continentCountry) => {
+                return c.name === continentCountry.name;
+              });
+              return x.length ? true : false;
+            });
+
+            return found.length ? true : false;
+          }
+        } else {
+          return countryFilters.every((country) => {
+            let filteredCountries = countries.filter((c) => c.name === country);
+            return filteredCountries.length ? true : false;
+          });
+        }
+      });
+    },
+
     contactsList() {
       let { countries: countryFilters } = this.activeFilters;
       let activeContinents = this.allContinents.filter((c) =>
@@ -121,7 +121,7 @@ export default {
       });
     },
 
-    ...mapGetters(["allContinents", "allContacts"]),
+    ...mapGetters(["allContinents", "allContacts", "allCompanies"]),
   },
 
   methods: {
@@ -181,6 +181,35 @@ export default {
 
         if (activeContinents.length) this.updateCountries(activeContinents);
         else this.updateCountries(this.allContinents);
+      }, 200);
+    },
+
+    updateCompanies(list) {
+      let unsortedList = [];
+
+      list.forEach((continent) => {
+        unsortedList = [...unsortedList, ...continent.countries];
+      });
+
+      const sortedList = unsortedList.sort((a, b) =>
+        a.name > b.name ? 1 : -1
+      );
+
+      sortedList.forEach((country) => {
+        this.filters.countries[country.name] = false;
+      });
+    },
+
+    updateCompanyFilters() {
+      setTimeout(() => {
+        const activeContinents = this.allContinents.filter((c) =>
+          this.activeFilters.continents.includes(c.name)
+        );
+
+        this.filters.companies = {};
+
+        if (activeContinents.length) this.updateCompanies(activeContinents);
+        else this.updateCompanies(this.allCompanies);
       }, 200);
     },
   },
@@ -266,7 +295,7 @@ export default {
     </ul>
   </transition-group>
 
-  <contact-list v-if="isFilters" :contacts="contactsList" />
+  <contact-list v-if="isFilters" :contacts="contactsList" :companies="companiesList" />
   <div class="filters__info" v-else>
     <p>Please select a continent and/or country from the filter above.</p>
   </div>

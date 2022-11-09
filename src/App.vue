@@ -13,6 +13,7 @@ const mapActions = () => {
   )
 }
 
+mapActions().getCompanies();
 mapActions().getContinents();
 mapActions().getContacts();
 

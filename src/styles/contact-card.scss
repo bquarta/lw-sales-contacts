@@ -147,6 +147,12 @@
         #ffffff 74.6%,
         $lawo-color-normal 26.4%);
     background-color: #fff;
+
+    &.company {
+      background-image: -webkit-linear-gradient(-27deg,
+        #ffffff 74.6%,
+        $lawo-color-secondary 26.4%);
+    }
   }
 
   .sc_select {
