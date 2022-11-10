@@ -14,6 +14,9 @@ export default {
   },
 
   computed: {
+    imagePath() {
+      return window.location.origin + '/wp-content/plugins/lawo-api-client/images/'
+    },
     isFilters() {
       return (
         this.activeFilters.continents.length ||
@@ -245,7 +248,7 @@ export default {
 <template>
   <nav class="nav">
     <figure>
-      <img :src="'wp-content/plugins/lawo-api-client/images/filter.svg'" />
+      <img :src="imagePath + 'filter.svg'" />
     </figure>
 
     <div
@@ -266,7 +269,7 @@ export default {
     </div>
 
     <div class="nav__label nav__label--clear" @click="clearAllFilters">
-      <img :src="'wp-content/plugins/lawo-api-client/images/refresh.svg'" />
+      <img :src="imagePath + 'refresh.svg'" />
     </div>
   </nav>
 

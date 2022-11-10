@@ -19,6 +19,9 @@ export default {
     };
   },
   computed: {
+    imagePath() {
+      return window.location.origin + '/wp-content/plugins/lawo-api-client/images/'
+    },
     vCardName() {
       return (
         "Lawo_" + this.contact.name + ".vcf"
@@ -62,7 +65,7 @@ export default {
     <div class="sc_wrapper">
       <div class="sc_section">
         <figure class="sc_user-image" @click="toggleDetails">
-          <img :src="'wp-content/plugins/lawo-api-client/images/no-image.jpg'" />
+          <img :src="imagePath + 'no-image.jpg'" />
         </figure>
 
         <div class="sc_userinfo">
@@ -94,7 +97,7 @@ export default {
         <div v-if="detailsAreVisible" class="sc_details">
           <div class="sc_detail-item">
             <figure v-if="contact.phone.length > 0">
-              <img class="sc_detail-item-icon" :src="'wp-content/plugins/lawo-api-client/images/phone-call.svg'" />
+              <img class="sc_detail-item-icon" :src="imagePath + 'phone-call.svg'" />
             </figure>
             <a v-if="contact.phone.length > 0" :href="'tel:' + contact.phone">{{
                 contact.phone
@@ -102,13 +105,13 @@ export default {
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.mobile.length > 0">
-              <img class="sc_detail-item-icon" :src="'wp-content/plugins/lawo-api-client/images/phone-call.svg'" />
+              <img class="sc_detail-item-icon" :src="imagePath + 'phone-call.svg'" />
             </figure>
             <a v-if="contact.mobile.length > 0" :href="'tel:' + contact.mobile">{{ contact.mobile }}</a>
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.email.length > 0">
-              <img class="sc_detail-item-icon" :src="'wp-content/plugins/lawo-api-client/images/email.svg'" />
+              <img class="sc_detail-item-icon" :src="imagePath + 'email.svg'" />
             </figure>
             <a href="#" @click="send()">
               Email
@@ -116,7 +119,7 @@ export default {
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.website.length > 0">
-              <img class="sc_detail-item-icon" :src="'wp-content/plugins/lawo-api-client/images/web.svg'" />
+              <img class="sc_detail-item-icon" :src="imagePath + 'web.svg'" />
             </figure>
             <a v-if="contact.website.length > 0" :href="contact.website">{{
                 contact.website

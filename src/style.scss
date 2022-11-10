@@ -188,7 +188,7 @@ body {
       background-color: $lawo-color-normal;
       font-size: 1.2em;
       color: #fff;
-      padding: 1em 1.2em 1em 3.2em;
+      padding: 1em 1.2em 1em 3.2em!important;
 
       &:before {
         content: "";
@@ -197,7 +197,7 @@ body {
         top: 0.8em;
         bottom: 0;
         left: 0.8em;
-        background-image: url("wp-content/plugins/lawo-api-client/images/top.svg");
+        background-image: url("/wp-content/plugins/lawo-api-client/images/top.svg");
         background-position: center;
         background-repeat: no-repeat;
         width: 1.6em;
