@@ -1,5 +1,4 @@
 #app__sales-contacts {
-
   .sc_list {
     display: flex;
     flex-direction: row;
@@ -56,6 +55,12 @@
   .sc_name {
     font-size: 1.5em;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   .sc_details {
@@ -143,15 +148,19 @@
     bottom: 0;
     right: 0;
     z-index: 1;
-    background-image: -webkit-linear-gradient(-27deg,
-        #ffffff 74.6%,
-        $lawo-color-normal 26.4%);
+    background-image: -webkit-linear-gradient(
+      -27deg,
+      #ffffff 74.6%,
+      $lawo-color-normal 26.4%
+    );
     background-color: #fff;
 
     &.company {
-      background-image: -webkit-linear-gradient(-27deg,
+      background-image: -webkit-linear-gradient(
+        -27deg,
         #ffffff 74.6%,
-        $lawo-color-secondary 26.4%);
+        $lawo-color-secondary 26.4%
+      );
     }
   }
 
