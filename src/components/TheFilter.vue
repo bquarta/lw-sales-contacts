@@ -19,8 +19,7 @@ export default {
     },
     isFilters() {
       return (
-        this.activeFilters.continents.length ||
-        this.activeFilters.countries.length
+        this.activeFilters.countries.length || (this.activeFilters.continents.length && this.activeFilters.countries.length)
       );
     },
 
@@ -70,7 +69,7 @@ export default {
           } else {
             const found = countries.filter((c) => {
               const x = sortedList.filter((continentCountry) => {
-                return c.name === continentCountry.name;
+                return false //c.name === continentCountry.name;
               });
               return x.length ? true : false;
             });
@@ -108,7 +107,7 @@ export default {
           } else {
             const found = countries.filter((c) => {
               const x = sortedList.filter((continentCountry) => {
-                return c.name === continentCountry.name;
+                return false; //c.name === continentCountry.name;
               });
               return x.length ? true : false;
             });
