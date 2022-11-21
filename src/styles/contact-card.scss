@@ -37,8 +37,10 @@
     margin: 0;
 
     img {
-      max-width: 200px;
+      max-width: 120px;
       background-color: #fff;
+      aspect-ratio: 3/4;
+      margin: 20px 0 0 30px;
     }
   }
 
@@ -215,6 +217,13 @@
     .sc_card {
       .sc_card {
         width: calc(100% * (1 / 1) - 10px - 20%);
+      }
+    }
+
+    .sc_user-image {
+      img {
+        max-width: 200px;
+        margin: 20px;
       }
     }
 

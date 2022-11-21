@@ -1,6 +1,6 @@
 <script>
 import QrCode from "qrcode.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   components: {
@@ -10,7 +10,7 @@ export default {
     contact: {
       type: Object,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -20,7 +20,9 @@ export default {
   },
   computed: {
     imagePath() {
-      return window.location.origin + '/wp-content/plugins/lawo-api-client/images/'
+      return (
+        window.location.origin + "/wp-content/plugins/lawo-api-client/images/"
+      );
     },
     vCardName() {
       return (
@@ -35,28 +37,30 @@ export default {
   methods: {
     send() {
       this.decrypt().then((email) => {
-        location.href = 'mailto:' + email
-      })
+        location.href = "mailto:" + email;
+      });
     },
     encrypt() {
       return new Promise((resolve, reject) => {
-        axios.post('https://lapi.ocean-erp.de/encrpyt?input=' + this.contact.email)
+        axios
+          .post("https://lapi.ocean-erp.de/encrpyt?input=" + this.contact.email)
           .then((response) => {
-            resolve(response.data)
-          })
-      })
+            resolve(response.data);
+          });
+      });
     },
     decrypt() {
       return new Promise((resolve, reject) => {
         this.encrypt().then((x) => {
-          axios.post('https://lapi.ocean-erp.de/decrpyt?input=' + x)
+          axios
+            .post("https://lapi.ocean-erp.de/decrpyt?input=" + x)
             .then((response) => {
-              resolve(response.data)
-            })
-        })
-      })
-    }
-  }
+              resolve(response.data);
+            });
+        });
+      });
+    },
+  },
 };
 </script>
 
@@ -65,7 +69,7 @@ export default {
     <div class="sc_wrapper">
       <div class="sc_section">
         <figure class="sc_user-image" @click="toggleDetails">
-          <img :src="imagePath + 'no-image.jpg'" />
+          <img :src="imagePath + 'user-images/s_no-image.jpg'" />
         </figure>
 
         <div class="sc_userinfo">
@@ -80,7 +84,11 @@ export default {
             {{ contact.firstName }} {{ contact.lastName }}
           </div>
 
-          <div v-if="contact.countries.length > 1 && contact.salesCompanies.length > 1">
+          <div
+            v-if="
+              contact.countries.length > 1 && contact.salesCompanies.length > 1
+            "
+          >
             {{ contact.salesCompanies.length }} Companies
           </div>
           <div v-else-if="contact.salesCompanies.length == 1">
@@ -95,32 +103,40 @@ export default {
         <div v-if="detailsAreVisible" class="sc_details">
           <div class="sc_detail-item">
             <figure v-if="contact.phone.length > 0">
-              <img class="sc_detail-item-icon" :src="imagePath + 'phone-call.svg'" />
+              <img
+                class="sc_detail-item-icon"
+                :src="imagePath + 'phone-call.svg'"
+              />
             </figure>
             <a v-if="contact.phone.length > 0" :href="'tel:' + contact.phone">{{
-                contact.phone
+              contact.phone
             }}</a>
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.mobile.length > 0">
-              <img class="sc_detail-item-icon" :src="imagePath + 'phone-call.svg'" />
+              <img
+                class="sc_detail-item-icon"
+                :src="imagePath + 'phone-call.svg'"
+              />
             </figure>
-            <a v-if="contact.mobile.length > 0" :href="'tel:' + contact.mobile">{{ contact.mobile }}</a>
+            <a
+              v-if="contact.mobile.length > 0"
+              :href="'tel:' + contact.mobile"
+              >{{ contact.mobile }}</a
+            >
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.email.length > 0">
               <img class="sc_detail-item-icon" :src="imagePath + 'email.svg'" />
             </figure>
-            <a href="#" @click="send()">
-              Email
-            </a>
+            <a href="#" @click="send()"> Email </a>
           </div>
           <div class="sc_detail-item">
             <figure v-if="contact.website.length > 0">
               <img class="sc_detail-item-icon" :src="imagePath + 'web.svg'" />
             </figure>
             <a v-if="contact.website.length > 0" :href="contact.website">{{
-                contact.website
+              contact.website
             }}</a>
           </div>
         </div>

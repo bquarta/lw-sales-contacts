@@ -15,11 +15,15 @@ export default {
 
   computed: {
     imagePath() {
-      return window.location.origin + '/wp-content/plugins/lawo-api-client/images/'
+      return (
+        window.location.origin + "/wp-content/plugins/lawo-api-client/images/"
+      );
     },
     isFilters() {
       return (
-        this.activeFilters.countries.length || (this.activeFilters.continents.length && this.activeFilters.countries.length)
+        this.activeFilters.countries.length ||
+        (this.activeFilters.continents.length &&
+          this.activeFilters.countries.length)
       );
     },
 
@@ -69,7 +73,7 @@ export default {
           } else {
             const found = countries.filter((c) => {
               const x = sortedList.filter((continentCountry) => {
-                return false //c.name === continentCountry.name;
+                return false; //c.name === continentCountry.name;
               });
               return x.length ? true : false;
             });
@@ -239,7 +243,7 @@ export default {
       });
 
       this.updateCountryFilters();
-    }, 3000);
+    }, 500);
   },
 };
 </script>
@@ -297,7 +301,11 @@ export default {
     </ul>
   </transition-group>
 
-  <contact-list v-if="isFilters" :contacts="contactsList" :companies="companiesList" />
+  <contact-list
+    v-if="isFilters"
+    :contacts="contactsList"
+    :companies="companiesList"
+  />
   <div class="filters__info" v-else>
     <p>Please select a continent and/or country from the filter above.</p>
   </div>
