@@ -243,7 +243,7 @@ export default {
       });
 
       this.updateCountryFilters();
-    }, 500);
+    }, 3000);
   },
 };
 </script>
