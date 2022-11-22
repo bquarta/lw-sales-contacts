@@ -15,9 +15,17 @@
     flex-direction: column;
     align-items: center;
     flex-shrink: 1;
-    margin: 1.5em auto 0 auto;
+    margin-top: 1.5em;
     padding: 1em;
     border: 1px solid #ccc;
+
+    &:nth-child(even) {
+      margin-left: 9px;
+    }
+
+    &:nth-child(odd) {
+      margin-right: 9px;
+    }
   }
 
   .sc_wrapper {
@@ -209,6 +217,15 @@
 
     .sc_card {
       width: calc(100% * (1 / 1) - 10px - 20%);
+      margin: 1.5em auto 0 auto;
+
+      &:nth-child(even) {
+        margin-left: auto;
+      }
+
+      &:nth-child(odd) {
+        margin-right: auto;
+      }
     }
   }
 
