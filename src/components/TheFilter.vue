@@ -307,7 +307,7 @@ export default {
     :companies="companiesList"
   />
   <div class="filters__info" v-else>
-    <p>Please select a continent and/or country from the filter above.</p>
+    <p>Please select a continent and country from the filter above.</p>
   </div>
 </template>
 
