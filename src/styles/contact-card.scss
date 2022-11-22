@@ -9,14 +9,14 @@
 
   .sc_card {
     background-color: #ffffff;
-    width: calc(100% * (1 / 2) - 10px - 1px);
+    width: calc(100% * (1 / 2) - 10px - 1px - 2em);
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-shrink: 1;
     margin: 1.5em auto 0 auto;
-    //   padding: 1em;
+    padding: 1em;
     border: 1px solid #ccc;
   }
 
