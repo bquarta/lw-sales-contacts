@@ -69,7 +69,8 @@ export default {
     <div class="sc_wrapper">
       <div class="sc_section">
         <figure class="sc_user-image" @click="toggleDetails">
-          <img :src="imagePath + 'user-images/s_no-image.jpg'" />
+          <img v-if="(contact.image != null && contact.image != '')" :src="imagePath + 'user-images/' + contact.image" />
+          <img v-else :src="imagePath + 'user-images/s_no-image.jpg'" />
         </figure>
 
         <div class="sc_userinfo">
